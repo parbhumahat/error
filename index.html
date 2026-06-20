@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Under Maintenance | Koffee Hub</title>
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+    
+    <style>
+        /* --- GOOGLE FONTS --- */
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap');
+
+        /* --- DESIGN VARIABLES --- */
+        :root {
+            --bg-dark: #120a06;
+            --coffee-dark: #23120b;
+            --caramel: #c68a4c;
+            --cream: #f7f1e5;
+            --gold: #dfb15b;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        /* --- CSS RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--cream);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        /* --- PREMIUM BACKGROUND EFFECTS --- */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(35, 18, 11, 0.8) 0%, rgba(18, 10, 6, 1) 70%);
+            z-index: -2;
+        }
+
+        /* Ambient Glowing Dust Particles */
+        .ambient-glow {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .dust {
+            position: absolute;
+            background: radial-gradient(circle, rgba(223, 177, 91, 0.2) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            animation: floatDust 12s infinite ease-in-out;
+        }
+        .dust:nth-child(1) { width: 300px; height: 300px; top: 10%; left: 15%; animation-delay: 0s; }
+        .dust:nth-child(2) { width: 400px; height: 400px; bottom: 15%; right: 10%; animation-delay: -3s; }
+        .dust:nth-child(3) { width: 200px; height: 200px; top: 60%; left: 5%; animation-delay: -6s; }
+
+        /* Floating Coffee Beans (CSS Vector Shapes) */
+        .floating-bean {
+            position: absolute;
+            width: 35px;
+            height: 22px;
+            background: #3d1f13;
+            border-radius: 50%;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.3);
+            animation: floatBean 8s infinite ease-in-out;
+            opacity: 0.6;
+        }
+        .floating-bean::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 10%; right: 10%;
+            height: 2px;
+            background: #23120b;
+            border-radius: 50%;
+            transform: translateY(-50%) rotate(5deg);
+        }
+        .bean1 { top: 20%; right: 15%; transform: rotate(25deg); animation-duration: 9s; }
+        .bean2 { bottom: 30%; left: 12%; transform: rotate(-40deg); animation-duration: 11s; animation-delay: -2s; }
+        .bean3 { top: 55%; right: 8%; transform: rotate(70deg); animation-duration: 7s; animation-delay: -4s; }
+
+        /* --- HEADER / BRANDING --- */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: var(--cream);
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .brand-logo span {
+            color: var(--gold);
+        }
+
+        .badge-container {
+            margin-top: 0.5rem;
+        }
+        .maintenance-badge {
+            display: inline-block;
+            background: rgba(198, 138, 76, 0.15);
+            border: 1px solid var(--caramel);
+            color: var(--gold);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* --- MAIN HERO CONTENT --- */
+        .hero-container {
+            max-width: 800px;
+            text-align: center;
+            z-index: 10;
+            padding: 0 1rem;
+        }
+
+        .error-code {
+            font-family: var(--font-serif);
+            font-size: 7.5rem;
+            font-weight: 400;
+            line-height: 1;
+            background: linear-gradient(180deg, var(--cream) 30%, var(--caramel) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+            letter-spacing: -2px;
+        }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .tagline-primary {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .tagline-secondary {
+            font-size: 0.95rem;
+            color: #bfae9c;
+            max-width: 550px;
+            margin: 0 auto 3rem auto;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* --- THE INTERACTIVE ARTISAN CRAFTED BREWING ANIMATION --- */
+        .craft-container {
+            position: relative;
+            width: 200px;
+            height: 240px;
+            margin: 0 auto 3rem auto;
+        }
+
+        /* Espresso stream pouring from top */
+        .espresso-stream {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 110px;
+            background: linear-gradient(to bottom, #4a2311, #96562a);
+            box-shadow: 0 0 8px rgba(150, 86, 42, 0.6);
+            opacity: 0.85;
+            animation: pourStream 4s ease-in-out infinite alternate;
+        }
+
+        /* Steam rising up */
+        .steam-container {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 5;
+        }
+        .steam-line {
+            width: 3px;
+            height: 35px;
+            background: rgba(247, 241, 229, 0.25);
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: steamRise 3s ease-in-out infinite;
+        }
+        .steam-line:nth-child(1) { animation-delay: 0.2s; height: 40px; }
+        .steam-line:nth-child(2) { animation-delay: 0.8s; height: 50px; }
+        .steam-line:nth-child(3) { animation-delay: 0.5s; height: 35px; }
+
+        /* The Premium Coffee Cup */
+        .coffee-cup-wrapper {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 100px;
+        }
+
+        /* Cup body */
+        .cup-body {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1f110a 0%, #0d0704 100%);
+            border: 2px solid var(--caramel);
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 -10px 20px rgba(198,138,76,0.1);
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        /* Luxury gold accent line on cup */
+        .cup-body::after {
+            content: '';
+            position: absolute;
+            top: 25px; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.5;
+        }
+
+        /* Cup Handle */
+        .cup-handle {
+            position: absolute;
+            right: -22px;
+            top: 20px;
+            width: 35px;
+            height: 50px;
+            border: 2px solid var(--caramel);
+            border-radius: 50% 40% 40% 50%;
+            background: transparent;
+            z-index: 1;
+        }
+
+        /* Coffee liquid filling interior */
+        .coffee-liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80%; /* Filled state */
+            background: linear-gradient(0deg, #2c140a 0%, #542b18 100%);
+            animation: fillUp 6s ease-in-out infinite alternate;
+        }
+
+        /* Cream/Crema layer on top of liquid */
+        .coffee-crema {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 8px;
+            background: linear-gradient(90deg, #c68a4c, #dfb15b, #c68a4c);
+            filter: blur(1px);
+            animation: waveMotion 1.5s ease-in-out infinite alternate;
+        }
+
+        /* Cup Saucer Plate */
+        .cup-saucer {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 12px;
+            background: linear-gradient(180deg, #1c0f09 0%, #0a0503 100%);
+            border: 1px solid rgba(198, 138, 76, 0.4);
+            border-radius: 50%;
+            z-index: 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        /* --- PROGRESS SECTION --- */
+        .progress-box {
+            max-width: 380px;
+            margin: 0 auto 3.5rem auto;
+            text-align: center;
+        }
+
+        .progress-label {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cream);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4px;
+        }
+        .progress-label span { color: var(--gold); }
+
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(198, 138, 76, 0.2);
+            padding: 1px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 80%; /* Current Progress */
+            background: linear-gradient(90deg, var(--caramel) 0%, var(--gold) 100%);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(223, 177, 91, 0.5);
+            animation: progressShine 2s infinite linear;
+            background-size: 200% 100%;
+        }
+
+        /* --- CONTACT & SOCIAL SECTION --- */
+        .contact-section {
+            border-top: 1px solid rgba(198, 138, 76, 0.15);
+            padding-top: 2.5rem;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+            color: var(--cream);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            font-size: 0.9rem;
+            color: #bfae9c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .contact-item:hover {
+            color: var(--gold);
+        }
+        .contact-item span {
+            color: var(--caramel);
+        }
+
+        /* Premium Minimal Social Icons using CSS shapes */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(198, 138, 76, 0.3);
+            background: rgba(35, 18, 11, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--cream);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .social-btn:hover {
+            border-color: var(--gold);
+            background: var(--caramel);
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(198,138,76,0.3);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            margin-top: 3rem;
+            font-size: 0.75rem;
+            color: #6e5d4f;
+            letter-spacing: 1px;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* --- CSS KEYFRAME ANIMATIONS --- */
+        @keyframes steamRise {
+            0% {
+                transform: translateY(15px) scaleX(0.8);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.4;
+                transform: translateY(-10px) scaleX(1.2);
+            }
+            100% {
+                transform: translateY(-35px) scaleX(0.5);
+                opacity: 0;
+                filter: blur(4px);
+            }
+        }
+
+        @keyframes fillUp {
+            0% { height: 45%; }
+            100% { height: 82%; }
+        }
+
+        @keyframes pourStream {
+            0% { width: 3px; opacity: 0.7; }
+            50% { width: 5px; opacity: 0.9; }
+            100% { width: 3px; opacity: 0.7; }
+        }
+
+        @keyframes waveMotion {
+            0% { transform: scaleY(0.95) skewX(-2deg); }
+            100% { transform: scaleY(1.05) skewX(2deg); }
+        }
+
+        @keyframes floatDust {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(15px); }
+        }
+
+        @keyframes floatBean {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(15px); }
+        }
+
+        @keyframes progressShine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .error-code { font-size: 5.5rem; }
+            h1 { font-size: 2.2rem; }
+            .tagline-primary { font-size: 1.3rem; }
+            .contact-info { gap: 1.2rem; flex-direction: column; align-items: center; }
+            .craft-container { transform: scale(0.9); margin-bottom: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow">
+        <div class="dust"></div>
+        <div class="dust"></div>
+        <div class="dust"></div>
+        <div class="floating-bean bean1"></div>
+        <div class="floating-bean bean2"></div>
+        <div class="floating-bean bean3"></div>
+    </div>
+
+    <header>
+        <div class="brand-logo">Koffee<span>Hub</span></div>
+        <div class="badge-container">
+            <span class="maintenance-badge">☕ Website Under Maintenance</span>
+        </div>
+    </header>
+
+    <main class="hero-container">
+        <div class="error-code">404</div>
+        <h1>Oops! Our Website is Brewing...</h1>
+        
+        <div class="craft-container">
+            <div class="espresso-stream"></div>
+            <div class="steam-container">
+                <div class="steam-line"></div>
+                <div class="steam-line"></div>
+                <div class="steam-line"></div>
+            </div>
+            <div class="coffee-cup-wrapper">
+                <div class="cup-body">
+                    <div class="coffee-liquid">
+                        <div class="coffee-crema"></div>
+                    </div>
+                </div>
+                <div class="cup-handle"></div>
+            </div>
+            <div class="cup-saucer"></div>
+        </div>
+
+        <p class="tagline-primary">"Like a perfect cup of coffee, our website needs a little more time to reach perfection."</p>
+        <p class="tagline-secondary">Currently we are upgrading our digital experience. Please come back soon as we curate something exceptionally premium for you.</p>
+    </main>
+
+    <section class="progress-box">
+        <div class="progress-label">
+            <span>☕ Brewing Fresh Experience...</span>
+            <span>80%</span>
+        </div>
+        <div class="progress-track">
+            <div class="progress-bar"></div>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <h3 class="contact-title">Need assistance?</h3>
+        <div class="contact-info">
+            <a href="tel:+9804430709" class="contact-item"><span>Phone:</span> 9804430709</a>
+            <a href="mailto:koffeehub4@gmail.com" class="contact-item"><span>Email:</span> koffeehub4@gmail.com</a>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 Koffee Hub. All Rights Reserved.
+    </footer>
+
+</body>
+</html>
